@@ -1,0 +1,16 @@
+using <namespace></namespace>.Model;
+using <namespace></namespace>.Repository;
+
+namespace <namespace></namespace>.Service
+{
+    public class <typename></typename>Service:BaseService<<typename></typename>>,Interface<typename></typename>Service
+    {
+        private readonly Interface<typename></typename>Repository _i<typename></typename>Repository;
+
+        public <typename></typename>Service(Interface<typename></typename>Repository i<typename></typename>Repository)
+        {
+            base._iBaseRepository = i<typename></typename>Repository;
+            this._i<typename></typename>Repository = i<typename></typename>Repository;
+        }
+    }
+}

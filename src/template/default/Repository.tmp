@@ -1,0 +1,7 @@
+using <namespace></namespace>.Model;
+namespace <namespace></namespace>.Repository
+{
+    public class <typename></typename>Repository:BaseRepository<<typename></typename>>, Interface<typename></typename>Repository
+    {
+    }
+}

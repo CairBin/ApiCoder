@@ -1,0 +1,42 @@
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+
+// SqlSugar IOC settings
+#region SqlSugarIOC
+builder.Services.AddSqlSugar(new SqlSugar.IOC.IocConfig()
+{
+    ConnectionString = builder.Configuration["SqlConnString"],
+    DbType = SqlSugar.IOC.IocDbType.MySql,
+    IsAutoCloseConnection = true,       // automatic release
+});
+# endregion
+
+//Dependence for the SqlSugar IOC
+#region IOC dependence
+<namespace></namespace>.IocExtend.AddCustomIoc(builder.Services);
+# endregion
+
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

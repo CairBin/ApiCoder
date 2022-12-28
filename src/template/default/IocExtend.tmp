@@ -1,0 +1,15 @@
+﻿using <namespace></namespace>.Model;
+using <namespace></namespace>.Repository;
+
+namespace <namespace></namespace>
+{
+    public static class IocExtend
+    {
+        public static IServiceCollection AddCustomIoc(this IServiceCollection services)
+        {
+            <sertype></sertype>
+
+            return services;
+        }
+    }
+}

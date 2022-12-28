@@ -1,0 +1,30 @@
+{
+    "template":"template/default/",
+    "namespace":"HelloWorld.Api",
+    "BaseModel":{
+        "enable":true,
+        "classname":"BaseId",
+        "type":{
+            "Id": "int"
+        }
+    },
+    "model":[
+        {
+            "classname":"UserInfo",
+            "type": {
+                "Username":"string",
+                "Password":"string"
+            },
+            "inherit": true
+        },
+        {
+            "classname":"TypeInfo",
+            "type":{
+                "TypeName":"string",
+                "Age":"int"
+            },
+            "inherit":false
+        }
+    ]
+
+}

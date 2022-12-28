@@ -1,0 +1,99 @@
+using System.Linq.Expressions;
+using SqlSugar;
+
+namespace <namespace></namespace>.Repository
+{
+    public interface InterfaceBaseRepository<TEntity> where TEntity:class,new()
+    {
+        /// <summary>
+        /// Create
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Task<bool> CreateAsync(TEntity entity);
+
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <param name="id">obj id in table of database</param>
+        /// <returns></returns>
+        Task<bool> DeleteAsync(int id);
+
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        Task<bool> EditAsync(TEntity entity);
+
+
+        /*---------------------------------------- Methods for querying data -------------------------------------------------*/
+
+        /// <summary>
+        /// Query with ID as index
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns>only one object</returns>
+        Task<TEntity> QueryAsync(int id);
+
+        /// <summary>
+        /// Custom query a piece of data
+        /// </summary>
+        /// <param name="func">Conditional expression</param>
+        /// <returns>only one object</returns>
+        Task<TEntity> QueryAsync(Expression<Func<TEntity,bool>> func);
+
+        /// <summary>
+        /// Pagination query
+        /// </summary>
+        /// <param name="page">page number</param>
+        /// <param name="size">size of data per page</param>
+        /// <param name="total">total number (Type from sqlsugar)</param>
+        /// <returns>objects list</returns>
+        Task<List<TEntity>> QueryAsync(int page, int size, RefAsync<int> total);
+
+        /// <summary>
+        /// Custom pagination query
+        /// </summary>
+        /// <param name="func">Conditional expression</param>
+        /// <param name="page">page number</param>
+        /// <param name="size">size of data per page</param>
+        /// <param name="total">total number</param>
+        /// <returns>objects list</returns>
+        Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int page, int size, RefAsync<int> total);
+
+        /// <summary>
+        /// Query all data
+        /// </summary>
+        /// <returns>objects list</returns>
+        Task<List<TEntity>> QueryAllAsync();
+
+        /// <summary>
+        /// Custom query all data
+        /// </summary>
+        /// <param name="func">Conditional expression</param>
+        /// <returns>objects list</returns>
+        Task<List<TEntity>> QueryAllAsync(Expression<Func<TEntity, bool>> func);
+
+        /// <summary>
+        /// Fuzzy query
+        /// </summary>
+        /// <param name="func">Conditional expression</param>
+        /// <returns>objects list</returns>
+        Task<List<TEntity>> QueryFuzzyAsync(Expression<Func<TEntity,bool>> func);
+
+        /// <summary>
+        /// Count rows
+        /// </summary>
+        /// <param name="func">Conditional expression</param>
+        /// <returns>rows number</returns>
+        Task<int> QueryCount(Expression<Func<TEntity, bool>> func);
+
+        /// <summary>
+        /// Determine whether eligible data exists
+        /// </summary>
+        /// <param name="func">Conditional expression</param>
+        /// <returns>state</returns>
+        Task<bool> IsExists(Expression<Func<TEntity, bool>> func);
+    }
+}

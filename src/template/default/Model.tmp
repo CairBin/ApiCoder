@@ -1,0 +1,9 @@
+using SqlSugar;
+
+namespace <namespace></namespace>.Model
+{
+    public class <typename></typename><fatherclass></fatherclass>
+    {
+        <type></type>
+    }
+}

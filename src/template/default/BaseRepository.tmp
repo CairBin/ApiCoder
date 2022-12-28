@@ -1,0 +1,91 @@
+using SqlSugar;
+using SqlSugar.IOC;
+using System.Linq.Expressions;
+using <namespace></namespace>.Model;
+
+namespace <namespace></namespace>.Repository
+{
+    public class BaseRepository<TEntity> : SimpleClient<TEntity>
+        ,InterfaceBaseRepository<TEntity> where TEntity : class, new()
+    {
+        public BaseRepository(ISqlSugarClient content = null):base(content)
+        {
+            base.Context = DbScoped.Sugar;
+            base.Context.DbMaintenance.CreateDatabase();
+
+            //Create tables of database
+            base.Context.CodeFirst.InitTables(
+                <inittype></inittype>
+                );
+        }
+
+        public async Task<bool> CreateAsync(TEntity entity)
+        {
+            return await base.InsertAsync(entity);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            return await base.DeleteByIdAsync(id);
+        }
+
+        public async Task<bool> EditAsync(TEntity entity)
+        {
+            return await base.UpdateAsync(entity);
+        }
+
+        /*-------------------------------------------- query ----------------------------------------------*/
+
+
+        public virtual async Task<List<TEntity>> QueryAllAsync(Expression<Func<TEntity, bool>> func)
+        {
+            return await base.GetListAsync(func);
+        }
+
+        public virtual async Task<List<TEntity>> QueryAllAsync()
+        {
+            return await base.GetListAsync();
+        }
+
+        public virtual async Task<TEntity> QueryAsync(int id)
+        {
+            return await base.GetByIdAsync(id);
+        }
+
+        public async Task<TEntity> QueryAsync(Expression<Func<TEntity, bool>> func)
+        {
+            return await base.GetSingleAsync(func);
+        }
+
+        /*---------------- page -------------*/
+        public virtual async Task<List<TEntity>> QueryAsync(int page, int size, RefAsync<int> total)
+        {
+            return await base.Context.Queryable<TEntity>().ToPageListAsync(page, size, total);
+        }
+
+        public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int page, int size, RefAsync<int> total)
+        {
+            return await base.Context.Queryable<TEntity>()
+                .Where(func)
+                .ToPageListAsync(page, size, total);
+        }
+
+        /*--------------- other ------------*/
+        public virtual async Task<int> QueryCount(Expression<Func<TEntity, bool>> func)
+        {
+            return await base.CountAsync(func);
+        }
+
+        public virtual async Task<List<TEntity>> QueryFuzzyAsync(Expression<Func<TEntity, bool>> func)
+        {
+            return await base.Context.Queryable<TEntity>()
+                .Where(func)
+                .ToListAsync();
+        }
+
+        public virtual async Task<bool> IsExists(Expression<Func<TEntity, bool>> func)
+        {
+            return await base.IsAnyAsync(func);
+        }
+    }
+}

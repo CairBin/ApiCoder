@@ -1,0 +1,8 @@
+using <namespace></namespace>.Model;
+
+namespace <namespace></namespace>.Service
+{
+    public interface Interface<typename></typename>Service:InterfaceBaseService<<typename></typename>>
+    {
+    }
+}

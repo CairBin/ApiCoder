@@ -1,0 +1,81 @@
+﻿using SqlSugar;
+using System.Linq.Expressions;
+
+namespace <namespace></namespace>.Service
+{
+    public class BaseService<TEntity>:InterfaceBaseService<TEntity> where TEntity : class, new()
+    {
+        // Transfer object from subclass constructor function
+        protected Repository.InterfaceBaseRepository<TEntity> _iBaseRepository;
+
+        public async Task<bool> CreateAsync(TEntity entity)
+        {
+            return await _iBaseRepository.CreateAsync(entity);
+        }
+
+        public async Task<bool> EditAsync(TEntity entity)
+        {
+            return await _iBaseRepository.EditAsync(entity);
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            return await _iBaseRepository.DeleteAsync(id);
+        }
+
+        /*--------------------------------------- Query ------------------------------------*/
+
+        //Maybe need DTO
+
+        /*----------------- page ------------------*/
+        public virtual async Task<List<TEntity>> QueryAsync(int page, int size, RefAsync<int> total)
+        {
+            return await _iBaseRepository.QueryAsync(page, size, total);
+        }
+
+        public virtual async Task<List<TEntity>> QueryAsync(Expression<Func<TEntity, bool>> func, int page, int size, RefAsync<int> total)
+        {
+            return await _iBaseRepository.QueryAsync(func, page, size, total);
+        }
+
+        /*-------------- navigation ---------------*/
+
+        public virtual async Task<TEntity> QueryAsync(int id)
+        {
+            return await _iBaseRepository.QueryAsync(id);
+        }
+
+        public async Task<TEntity> QueryAsync(Expression<Func<TEntity, bool>> func)
+        {
+            return await _iBaseRepository.QueryAsync(func);
+        }
+
+        /*-------------- all data ---------------*/
+        public virtual async Task<List<TEntity>> QueryAllAsync()
+        {
+            return await _iBaseRepository.QueryAllAsync();
+        }
+
+        public virtual async Task<List<TEntity>> QueryAllAsync(Expression<Func<TEntity, bool>> func)
+        {
+            return await _iBaseRepository.QueryAllAsync(func);
+        }
+
+        /*-------------- other -----------------*/
+        public virtual async Task<List<TEntity>> QueryFuzzyAsync(Expression<Func<TEntity, bool>> func)
+        {
+            return await _iBaseRepository.QueryFuzzyAsync(func);
+        }
+
+        public virtual async Task<int> QueryCount(Expression<Func<TEntity, bool>> func)
+        {
+            return await _iBaseRepository.QueryCount(func);
+        }
+
+        public virtual async Task<bool> IsExists(Expression<Func<TEntity, bool>> func)
+        {
+            return await _iBaseRepository.IsExists(func);
+        }
+
+    }
+}

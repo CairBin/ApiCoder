@@ -1,0 +1,10 @@
+using SqlSugar;
+
+namespace <namespace></namespace>.Model
+{
+    //id class
+    public class <typename></typename>
+    {
+        <type></type>
+    }
+}
